@@ -1,45 +1,30 @@
 #include<stdio.h>
-#include<stdlib.h>
-#include<stdbool.h>
 
-int size, *visited, **adjacency;
+int adjacency[25][25] = {0}, visited[25] = {0}, v, e;
 
 void DFS(int start){
     visited[start] = 1;
-    printf("%d ",start+1);
-    for(int i = 0; i < size; i++){
-        if(adjacency[start][i] == 1 && visited[i] != 1) DFS(i);
+    printf(" %d",start);
+    for(int column = 1; column <= v; column++){
+        if(adjacency[start][column] != 0 && visited[column] != 1) DFS(column);
     }
 }
 
 int main(){
-    int i, j, temp, start;
-    printf("\nGive the no of nodes of the graph:");
-    scanf("%d",&size);
-    visited = (int *)malloc(size*sizeof(int));
-    adjacency = (int **)malloc(size*sizeof(int *));
-    for(i = 0; i < size; i++){
-        adjacency[i] = (int *)malloc(size*sizeof(int));
-        printf("\nGive the connected nodes for node %d: \n", i + 1);
-        while(1){
-            scanf("%d",&temp);
-            if(temp == -1) break;
-            else adjacency[i][temp - 1] = 1;
-        }
-        for(j = 0; j < size; j++){
-            if(adjacency[i][j] != 1) adjacency[i][j] = 0;
-        }
+    int s, d, start;
+    printf("\nEnter the no of vertices of the graph:");
+    scanf("%d", &v);
+    printf("\nEnter the no of edges of the graph:");
+    scanf("%d", &e);
+    for(int edge = 1; edge <= e; edge++){
+        printf("\nEnter the edge %d: ",edge);
+        scanf("%d %d", &s, &d);
+        adjacency[s][d] = 1;
+        adjacency[d][s] = 1;
     }
-    printf("\nAdjacency matrix is:\n");
-    for(i = 0;i< 5;i++){
-        for(j = 0;j<5;j++){
-            printf("%d ",adjacency[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\nGive the starting node:");
+    printf("\nEnter the starting vertex:");
     scanf("%d", &start);
-    printf("\nThe given graph is:\n");
-    DFS(start-1);
+    printf("\nThe DFS traversal of the graph is:");
+    DFS(start);
     return 0;
 }

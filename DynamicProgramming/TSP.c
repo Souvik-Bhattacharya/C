@@ -1,78 +1,52 @@
-#include <stdio.h>
+#include<stdio.h>
 #include<limits.h>
 
-int c[25][25], n = 0, optimal_path[20];
+int m[25][25] = {0}, cities, paths, startingCity, optimalOption;
 
-int TSP(int i, int vc[]){
-    int min = INT_MAX, temp,j, flag = 0, temp_arr[20];
-    vc[i] = 1;
-    for(j = 0;j < n;j++){
-        if(vc[j] == 0){
-            flag = 1;
-            break;
-        }
-    }
-    if(flag == 1){
-        for(j = 0;j < n;j++){
-            if(vc[j] == 0){
-                for(int k = 0;k<n;k++) temp_arr[k] = vc[k];
-                temp = c[i][j] + TSP(j,temp_arr);
-                if(temp < min){
-                    min = temp;
-                    optimal_path[i] = j;
-                }
+int TSP(int start, int visitedCities[]){
+    int min = INT_MAX, flag = 1, visitedCitiesCopy[25];
+    visitedCities[start] = 1;
+    for(int city = 1; city <= cities; city++){
+        if(visitedCities[city] == 0){
+            flag = 0;
+            for(int city = 1; city <= cities; city++) visitedCitiesCopy[city] = visitedCities[city];
+            int cost = m[start][city] + TSP(city, visitedCitiesCopy);
+            if(cost < min){
+                min = cost;
+                optimalOption = city;
             }
         }
-        return min;
     }
-    else{
-        return c[i][0];
+    if(flag){
+        min = m[start][startingCity];
+        optimalOption = startingCity;
     }
+    return min;
 }
 
-void path(int start,int visited_path[]){
-    if(visited_path[start] == 0){
-        visited_path[start] = 1;
-        printf("%d->",start+1);
-        TSP(optimal_path[start],visited_path);
-        path(optimal_path[start],visited_path);
-    }
-    else{
-        printf("%d",start+1);
-    }
+void optimalPath(int start, int visitedCities[]){
+    TSP(start, visitedCities);
+    printf("%d->", start);
+    if(optimalOption != startingCity)  optimalPath(optimalOption,visitedCities);
+    else printf("%d", optimalOption);
 }
 
 int main()
 {
-    int i, j;
-    int visited_cities[20], visited_path[20];
-    printf("\nEnter Number of Cities:");
-    scanf("%d", &n);
-    printf("\nEnter the costs of Cost Matrix:\n");
-    for (i = 0; i < n; i++)
-    {
-        printf("\nEnter costs of row %d\n",  i + 1);
-        for (j = 0; j < n; j++)
-        {
-            scanf("%d", &c[i][j]);
-        }
-        visited_cities[i] = 0;
-        visited_path[i] = 0;
+    int s, d, c, visitedCities[25] = {0};
+    printf("\nEnter Number of cities:");
+    scanf("%d", &cities);
+    printf("\nEnter Number of paths:");
+    scanf("%d", &paths);
+    for(int path = 1; path <= paths; path++){
+        printf("\nEnter the source, destination and cost of path %d: ", path);
+        scanf("%d %d %d", &s, &d, &c);
+        m[s][d] = c;
     }
-    printf("\nEntered Cost Matrix is:\n");
-    for (i = 0; i < n; i++)
-    {
-        printf("\n");
-        for (j = 0; j < n; j++)
-        {
-            printf("%d ", c[i][j]);
-        }
-    }
-    int start = 0;
-    printf("\nThe cost is:%d",TSP(start,visited_cities));
-    printf("\nThe optimal path is:");
-    path(start,visited_path);
-    printf("\n");
-    for(int l = 0;l<n;l++) printf("%d ",optimal_path[l]);
+    printf("\nEnter the starting city:");
+    scanf("%d", &startingCity);
+    printf("\nThe minimal cost is: %d", TSP(startingCity,visitedCities));
+    printf("\nThe optimal path is: %d->", startingCity);
+    optimalPath(optimalOption, visitedCities);
     return 0;
 }

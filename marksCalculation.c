@@ -31,7 +31,7 @@ int main()
         printf("%d|",i);
     }
     printf("\n______________________________\n");
-    printf("|corrAns|",i+1);
+    printf("|corrAns|");
     for(i=0;i<question;++i)
     {
         printf("%c|",answers[i]);

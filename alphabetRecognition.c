@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<ctype.h>
+
 int main(){
     char st[100],c;
     int vc=0,cc=0,i=0,n;

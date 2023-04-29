@@ -1,10 +1,10 @@
 #include<stdio.h>
 #include<string.h>
 #include<math.h>
-void main()
+int main()
 {
     int n,i;
-    long long int sum=0;
+    long int sum=0;
     char hex[10000];
     printf("Enter the HEX. no.");
     scanf("%s",hex);
@@ -28,5 +28,6 @@ void main()
         if(hex[i]=='E') sum+=(14*(pow(16,(n-1-i))));
         if(hex[i]=='F') sum+=(15*(pow(16,(n-1-i))));
     }
-    printf("The decimal no. is: %Ld",sum);
+    printf("The decimal no. is: %ld",sum);
+    return 0;
 }

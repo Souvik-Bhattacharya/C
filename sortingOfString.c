@@ -3,6 +3,7 @@ int main(){
     char n[100];
     char c,tmp;
     int i=0,j,l;
+    printf("\nEnter the string: ");
     while(c!='\n'){
         c=getchar();
         n[i]=c;
@@ -20,6 +21,6 @@ int main(){
             }
         }
     }
-    printf("The sorted num is: %s",n);
+    printf("The sorted string is: %s",n);
     return 0;
 }

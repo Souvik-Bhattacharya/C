@@ -13,7 +13,7 @@ void nextColor(int node, int v){
     if(node == v + 1) display(v);
     else{
         color[node] = 1;
-        for(int vertex = 1; vertex <= v - 1; vertex++){
+        for(int vertex = 1; vertex <= node - 1; vertex++){
             if(graph[vertex][node] == 1 && color[vertex] == color[node]) color[node]++;
         }
         nextColor(node + 1, v);

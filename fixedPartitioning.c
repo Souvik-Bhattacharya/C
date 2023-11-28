@@ -53,7 +53,7 @@ void bestFit(struct block partitions[], int processes[]){
         for(int j = 0; j < p; j++){
             if(!partitions[j].allocated && processes[i] <= partitions[j].size){
                 if(partitions[j].size - processes[i] < diff){
-                    diff = partitions[j].size;
+                    diff = partitions[j].size - processes[i];
                     index = j;
                 } 
             }
@@ -80,7 +80,7 @@ void worstFit(struct block partitions[], int processes[]){
         for(int j = 0; j < p; j++){
             if(!partitions[j].allocated && processes[i] <= partitions[j].size){
                 if(partitions[j].size - processes[i] > diff){
-                    diff = partitions[j].size;
+                    diff = partitions[j].size - processes[i];
                     index = j;
                 } 
             }
@@ -105,7 +105,7 @@ int main(){
     printf("\nEnter no of partitions: ");
     scanf("%d", &p);
 
-    printf("\nGive size of the partitions:\n");
+    printf("\nGive size of the partitions: ");
     for(int i = 0; i < p; i++){
         scanf("%d", &partitions[i].size);
         partitions[i].allocated = 0;
@@ -114,7 +114,7 @@ int main(){
     printf("\nEnter no of process: ");
     scanf("%d", &n);
 
-    printf("\nGive size of the processes:\n");
+    printf("\nGive size of the processes: ");
     for(int i = 0; i < n; i++){
         scanf("%d", &processes[i]);
     }
